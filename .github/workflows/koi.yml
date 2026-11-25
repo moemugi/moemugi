@@ -1,0 +1,33 @@
+name: Draw koi
+
+on:
+  schedule:
+    - cron: '15 0 * * *' # Runs nightly just after midnight UTC
+  workflow_dispatch:      # Allows you to run it manually
+  push:
+    paths:
+      - '.github/workflows/koi.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  koi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate koi
+        uses: yalongwastaken/git-koi@v1
+        with:
+          body: white      # Options: white, black, asagi, tea, gold, platinum
+          size: 256x256    # Pond dimensions (e.g., 512x256 for a wider pond)
+          scale: 2         # Use 1 if making a wide pond so the GIF stays lightweight
+
+      - name: Commit koi
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add koi/
+          git diff --cached --quiet || git commit -m "chore: update koi"
+          git push

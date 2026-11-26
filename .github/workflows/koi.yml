@@ -22,7 +22,7 @@ jobs:
         with:
           body: white      # Options: white, black, asagi, tea, gold, platinum
           size: 512x256   # Pond dimensions (e.g., 512x256 for a wider pond)
-          scale: 1         # Use 1 if making a wide pond so the GIF stays lightweight
+          scale: 3         # Use 1 if making a wide pond so the GIF stays lightweight
 
       - name: Commit koi
         run: |
